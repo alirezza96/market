@@ -1,17 +1,20 @@
-import RootTemplate from "pages";
-import Auth from "pages/auth"
-import NotFound from "pages/not-found"
 import { IRouter } from "types/routes-types"
-import Dashboard from "pages/dashboard"
-import PrivateRoute from "./privateRoute";
-import Login from "pages/auth/login"
-import Register from "pages/auth/register"
-import Otp from "pages/auth/otp"
-import ForgetPassword from "pages/auth/forget-password"
 import { Navigate } from "react-router-dom";
+import { lazy } from "react";
 
-const routes: IRouter[] = [
-    { path: "/", element: <RootTemplate /> },
+const Home = lazy(() => import("pages"))
+const Auth = lazy(() => import("pages/auth"))
+const NotFound = lazy(() => import("pages/not-found"))
+const Dashboard = lazy(() => import("pages/dashboard"))
+const PrivateRoute = lazy(() => import("routes/PrivateRoute"))
+const Login = lazy(() => import("pages/auth/login"))
+const Register = lazy(() => import("pages/auth/register"))
+const Otp = lazy(() => import("pages/auth/otp"))
+const ForgetPassword = lazy(() => import("pages/auth/forget-password"))
+const Products = lazy(() => import("pages/products"))
+
+export const routes: IRouter[] = [
+    { path: "/", element: <Home /> },
     {
         path: "auth", element: <Auth />,
         children: [
@@ -22,6 +25,7 @@ const routes: IRouter[] = [
             { path: "forget-password", element: <ForgetPassword /> },
         ]
     },
+    { path: "products", element: <Products /> },
     // page not found
     { path: "*", element: <NotFound /> },
     // private routes
@@ -31,5 +35,3 @@ const routes: IRouter[] = [
 
 
 
-
-export default routes
