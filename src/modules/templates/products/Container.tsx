@@ -1,18 +1,24 @@
 import Card from "modules/components/card.product"
-import { useEffect } from "react"
 import { useQuery } from "react-query"
-import api from "services/axios/configs"
+import getProducts from "services/axios/requests/products"
 export default function Container() {
-    const { data: products } = useQuery("products", () => api("/products").then(res => res))
-    // useEffect(() => {
-    //     api("/products").then(res => console.log("res =>", res))
-    // }, [])
-    // console.log("products =>", products)
+    const { data: products } = useQuery("products", () => getProducts())
     return (
         <div>
             Container
             {
-                products?.map(product => <Card key={product.id} />)
+                products?.map(product => {
+                    const { id, title, image, price } = product
+                    return (
+                        <Card
+                            image={image}
+                            title={title}
+                            price={price}
+                            id={id}
+                            key={id} />
+                    )
+                }
+                )
             }
 
         </div>
